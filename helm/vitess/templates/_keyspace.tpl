@@ -41,7 +41,7 @@ spec:
         args:
           - "-c"
           - |
-            set -ex
+            set -x
 
             VTCTLD_SVC=vtctld.{{ $namespace }}:15999
             SECONDS=0
@@ -80,6 +80,10 @@ spec:
 {{ $schema | indent 14}}
             END_OF_COMMAND
             )" {{ $keyspace.name }}
+            rs=$?
+            sleep 30
+            exit $rs
+
       volumes:
 {{ include "user-secret-volumes" $secrets | indent 8 }}
 {{ end }}

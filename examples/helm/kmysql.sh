@@ -16,21 +16,23 @@
 
 # This is a convenience script to run the mysql client against the local example.
 
-host=$(minikube service vtgate-zone1 --format "{{.IP}}" | tail -n 1)
-port=$(minikube service vtgate-zone1 --format "{{.Port}}" | tail -n 1)
+# host=$(minikube service vtgate-zone1 --format "{{.IP}}" | tail -n 1)
+# port=$(minikube service vtgate-zone1 --format "{{.Port}}" | tail -n 1)
 
-if [ -z $port ]; then 
-	#This checks K8s running on an single node by kubeadm
-	if [ $(kubectl get nodes | grep -v NAM | wc -l) -eq 1 -o $(kubectl get nodes | grep -v NAM | grep master | wc -l ) -eq 1 ]; then
-		host="127.0.0.1"
-		port=`kubectl describe service vtgate-zone1 | grep NodePort | grep mysql | awk '{print $3}' | awk -F'/' '{print $1}'`
-	fi
-fi
+# if [ -z $port ]; then 
+# 	#This checks K8s running on an single node by kubeadm
+# 	if [ $(kubectl get nodes | grep -v NAM | wc -l) -eq 1 -o $(kubectl get nodes | grep -v NAM | grep master | wc -l ) -eq 1 ]; then
+# 		host="127.0.0.1"
+# 		port=`kubectl describe service vtgate-zone1 | grep NodePort | grep mysql | awk '{print $3}' | awk -F'/' '{print $1}'`
+# 	fi
+# fi
 
-if [ -z $port ]; then
-	echo "Error: failed to obtain [host:port] minikube or kubectl."
-	exit 1;
+# if [ -z $port ]; then
+# 	echo "Error: failed to obtain [host:port] minikube or kubectl."
+# 	exit 1;
 
-fi
+# fi
 
-mysql -h "$host" -P "$port" $*
+# kpf service/vtgate-zone1 3306:3306
+
+mysql -h 127.0.0.1 "$@"

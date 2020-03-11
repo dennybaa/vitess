@@ -40,11 +40,14 @@ spec:
         args:
           - "-c"
           - |
-            set -ex
+            set -x
 
             VTCTLD_SVC=vtctld.{{ $namespace }}:15999
             VTCTL_EXTRA_FLAGS=({{ include "format-flags-inline" $defaultVtctlclient.extraFlags }})
             vtctlclient ${VTCTL_EXTRA_FLAGS[@]} -server $VTCTLD_SVC {{ $job.command }}
+            rs=$?
+            sleep 30
+            exit $rs
       volumes:
 {{ include "user-secret-volumes" $secrets | indent 8 }}
 

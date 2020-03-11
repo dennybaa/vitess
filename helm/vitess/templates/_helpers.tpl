@@ -111,6 +111,9 @@ elif [ "$VT_DB_FLAVOR" = "mysql" ]; then
 elif [ "$VT_DB_FLAVOR" = "mysql56" ]; then
   MYSQL_FLAVOR=MySQL56
 
+elif [ "$VT_DB_FLAVOR" = "mysql80" ]; then
+  MYSQL_FLAVOR=MySQL80
+
 elif [ "$VT_DB_FLAVOR" = "maria" ]; then
   MYSQL_FLAVOR=MariaDB
 
